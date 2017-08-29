@@ -7,9 +7,6 @@
 //This file is the main file for the RVW challenge.
 task main()
 {
-	//This is the set of tasks to move the robot to get 4 points by:
-	//Scoring a cone on a mobile goal
-	//Scoring a cone on a post goal
 	moveArmUpForTime(127, 0.5);
 	moveForwardForTime(127, 2);
 	moveArmDownForTime(127, 0.4);
