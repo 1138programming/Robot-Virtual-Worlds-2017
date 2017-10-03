@@ -1,10 +1,12 @@
 int step = 0;
-double averageEncoderValueAbsolute = 0;
-double averageEncoderValueRelative = 0;
-double encoderReference = 0;
-double encoderOffset = 0;
+float averageEncoderValueAbsolute = 0;
+float averageEncoderValueRelative = 0;
+float encoderReference = 0;
+float encoderOffset = 0;
 bool encoderReferenceFlag = false;
 const int kMaxMotorSpeed = 127;
+
+#pragma systemFile;
 
 void init()
 {
@@ -38,12 +40,12 @@ void setReference(float value)
 	}
 }
 
-double goForward(int distance)
+float goForward(int distance, float logValue = 750)
 {
 	setReference(distance + averageEncoderValueRelative);
 	//Sets a fixed value for the speed function
 
-	double speed = floor((kMaxMotorSpeed * log(abs(encoderReference - averageEncoderValueRelative) + 1)) / (log(301.0)));
+	float speed = floor((kMaxMotorSpeed * log(abs(encoderReference - averageEncoderValueRelative) + 1)) / (log(logValue + 1)));
 	//As the robot gets close to its destination, it slows down to minimize overshoot
 
 	if(speed > kMaxMotorSpeed)
@@ -59,11 +61,6 @@ double goForward(int distance)
 	return speed;
 }
 
-void openClaw(int speed)
-{
-	motor[ClawMotor] = speed;
-}
-
 void wristUp(int speed)
 {
 	motor[WristMotor] = speed;
@@ -76,6 +73,38 @@ void moveArm(int speed, bool pinWrist = true)
 		wristUp(-speed);
 }
 
+float setArmTo(int target, float logValue = 750)
+{
+	float Pot = SensorValue(WristPotentiometer);
+	//Sets a variable to the wrist potentiometer's value
+
+	float speed = floor((kMaxMotorSpeed * log(abs(target - Pot) + 1)) / (log(logValue + 1)));
+	//Calculates a speed based on how far the sensor value is from the target value
+
+	if(speed > kMaxMotorSpeed)
+		speed = 127 * (abs(speed) / speed);
+	//Makes sure that the speed doesn't go over the max motor speed
+
+	if((target - Pot) > 0)
+		moveArm(speed, false);
+	else
+		moveArm(-speed, false);
+	//Goes either forwards or backwards depending on whther the distance value is positive or negative
+
+	return speed;
+}
+
+void openClaw(int speed)
+{
+	motor[ClawMotor] = speed;
+}
+
+void extendArm(int speed)
+{
+	motor[LeftExtendMotor] = speed;
+	motor[RightExtendMotor] = speed;
+}
+
 void clearStep()
 {
 	clearTimer(T2);
@@ -83,6 +112,7 @@ void clearStep()
 	moveArm(0);
 	openClaw(0);
 	wristUp(0);
+	extendArm(0);
 	encoderOffset = averageEncoderValueAbsolute;
 	encoderReference = 0;
 	encoderReferenceFlag = false;
@@ -94,30 +124,30 @@ int wait(int msec)
 	return msec - time1[T2] < 0 ? 0 : msec - time1[T2];
 }
 
-double turn(int degrees)
+float turn(int degrees, float logValue = 1800)
 {
 	float Gyro = SensorValue[GyroSensor];
 	if(Gyro < 0)
-		Gyro = 3600 - (Gyro * -1);
+		Gyro += 3600;
 	if(degrees < 0)
-		degrees = 3600 - (degrees * -1);
+		degrees += 3600;
 
-	double rightAngle = degrees > Gyro ? degrees - Gyro : (3600 - Gyro) + degrees;
-	double leftAngle = degrees > Gyro ? (3600 - degrees) : Gyro - degrees;
+	float rightAngle = degrees > Gyro ? degrees - Gyro : (3600 - Gyro) + degrees;
+	float leftAngle = degrees > Gyro ? (3600 - degrees) + Gyro : Gyro - degrees;
 
 	float speed;
 	//As the difference between the desired degree and the gyro value get bigger, the speed increases logarithmically
 
 	if(rightAngle < leftAngle)
 	{
-		speed = floor((kMaxMotorSpeed * log(abs(degrees - Gyro) + 1)) / (log(1801.0)));
+		speed = floor((kMaxMotorSpeed * log(abs(degrees - Gyro) + 1)) / (log(logValue + 1)));
 		move(speed, -speed); //Turn right
 	}
 	else
 	{
-		speed = floor((kMaxMotorSpeed * log(abs((3600 - degrees) - (3600 - Gyro)) + 1)) / (log(1801.0)));
+		speed = floor((kMaxMotorSpeed * log(abs(Gyro - degrees) + 1)) / (log(logValue + 1)));
 		move(-speed, speed); //Turn left
 	}
 
-	return speed;
+	return speed <= 15 ? 0 : speed;
 }
