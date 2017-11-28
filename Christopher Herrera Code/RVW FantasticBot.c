@@ -34,9 +34,9 @@ task main()
 		loopCode();
 		switch(step)
 		{
-		case 0: //Move to the mobile goal and lift arm
-			setArmTo(60);
-			if(goForward(1200, 750, false) == 0)
+			case 0: //Move to the mobile goal and lift arm
+				setArmTo(60);
+				if(goForward(1200, 750, false) == 0)
 					clearStep();
 				break;
 			case 1: //Release cone onto the mobile goal (2 points)
@@ -60,16 +60,16 @@ task main()
 					clearStep();
 				break;
 			case 5: //Move toward the matchload
-				if(goForward(850) == 0)
+				if(goForward(570) == 0)
 					clearStep();
 				break;
-			case 6: //Tilt wrist up to stack another cone (4 points)
-				if(setWristTo(1600) == 0)
+			case 6:
+				//if(setWristTo(1600) == 0)
 					clearStep();
 				break;
 			case 7: //Move back and move wrist down
-				setWristTo(1404);
-				if(goForward(-280) == 0)
+				//setWristTo(1404);
+				//if(goForward(-280) == 0)
 					clearStep();
 				break;
 			case 8: //Turn towards the wall
@@ -123,7 +123,7 @@ task main()
 				if(turn(1680) == 0)
 					clearStep();
 				break;
-			case 20: //Release cone to score it (6 points)
+			case 20: //Release cone to score it (4 points)
 				openClaw(127);
 				if(wait(50) == 0)
 					clearStep();
@@ -141,7 +141,7 @@ task main()
 				if(turn(1700, 14400) == 0)
 					clearStep();
 				break;
-			case 24: //Release cone to score it (8 points)
+			case 24: //Release cone to score it (6 points)
 				openClaw(127);
 				if(wait(50) == 0)
 					clearStep();
@@ -160,7 +160,7 @@ task main()
 				if(turn(1720, 14400) == 0)
 					clearStep();
 				break;
-			case 28: //Release cone to score it (10 points)
+			case 28: //Release cone to score it (8 points)
 				openClaw(127);
 				if(wait(50) == 0)
 					clearStep();
@@ -181,7 +181,7 @@ task main()
 				if(turn(1740, 14400) == 0)
 					clearStep();
 				break;
-			case 32: //Release cone to score it (12 points)
+			case 32: //Release cone to score it (10 points)
 				openClaw(127);
 				if(wait(50) == 0)
 					clearStep();
@@ -203,76 +203,201 @@ task main()
 				if(turn(1790, 14400) == 0)
 					clearStep();
 				break;
-			case 36: //Release cone to score it (14 points)
+			case 36: //Release cone to score it (12 points)
 				openClaw(127);
 				if(wait(50) == 0)
 					clearStep();
 				break;
-			case 37: //Move arm down to pick up mobile goal
-				setWristTo(1404);
+			case 37: //Turn to preloads
+				setArmTo(320);
 				extendArmTo(0);
-				if(setArmTo(-10) == 0)
+				if(turn(2240, 14400) == 0)
 					clearStep();
 				break;
-			case 38: //Move forward towards mobile goal
-				if(goForward(150) == 0)
-					clearStep();
-				break;
-			case 39: //Grab mobile goal
+			case 38: //Grab preload
 				openClaw(-127);
 				if(wait(50) == 0)
 					clearStep();
 				break;
-			case 40: //Turn to begin navigating to the blue zone
-				if(turn(450, 1800, -1) == 0)
+			case 39: //Turn to place eighth cone
+				setArmTo(450);
+				extendArmTo(300);
+				if(turn(1810, 14400) == 0)
 					clearStep();
 				break;
-			case 41: //Lift arm and lower the wrist
-				setWristTo(685);
-				if(setArmTo(240) == 0)
-					clearStep();
-				break;
-			case 42: //Move forward
-				if(goForward(520) == 0)
-					clearStep();
-				break;
-			case 43: //Turn
-				if(turn(3180) == 0)
-					clearStep();
-				break;
-			case 44: //Move forward some more
-				if(goForward(800) == 0)
-					clearStep();
-				break;
-			case 45: //Turn
-				if(turn(410) == 0)
-					clearStep();
-				break;
-			case 46: //Move forward to the blue zone
-				if(goForward(2400) == 0)
-					clearStep();
-				break;
-			case 47: //Turn to face the blue zone
-				if(turn(0) == 0)
-					clearStep();
-				break;
-			case 48: //Move up to the blue zone bar
-				if(abs(goForward(42, 250, true)) <= 16)
-					clearStep();
-				break;
-			case 49: //Extend the arm
-				if(extendArmTo(855) == 0)
-					clearStep();
-				break;
-			case 50: //Open the claw and release the mobile goal (34 points)
+			case 40: //Release cone to score it (14 points)
 				openClaw(127);
 				if(wait(50) == 0)
 					clearStep();
 				break;
-			case 51: //Un-extend the arm
+			case 41: //Turn to preloads
+				setArmTo(320);
+				extendArmTo(0);
+				if(turn(2240, 14400) == 0)
+					clearStep();
+				break;
+			case 42: //Grab preload
+				openClaw(-127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 43: //Turn to place ninth cone
+				setArmTo(464);
+				turn(1840, 14400);
+				if(extendArmTo(383) == 0)
+					clearStep();
+				break;
+			case 44: //Release cone to score it (16 points)
+				openClaw(127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 45: //Turn to preloads
+				setArmTo(320);
+				turn(2300, 14400);
 				if(extendArmTo(0) == 0)
 					clearStep();
 				break;
-		}
+			case 46: //Grab preload
+				openClaw(-127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 47: //Turn to place tenth cone
+				setArmTo(512);
+				turn(1880, 14400);
+				if(extendArmTo(700) == 0)
+					clearStep();
+				break;
+			case 48: //Release cone to score it (18 points)
+				openClaw(127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 49: //Move arm down to pick up mobile goal
+				setWristTo(840);
+				extendArmTo(640);
+				setArmTo(130);
+				if(turn(3000, 1800, -1) == 0)
+					clearStep();
+				break;
+			case 50:
+				openClaw(-127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 51:
+				setArmTo(250);
+				if(turn(900, 1800, 1) == 0)
+					clearStep();
+				break;
+			case 52:
+				if(goForward(500) == 0)
+					clearStep();
+				break;
+			case 53:
+				if(turn(1350) == 0)
+					clearStep();
+				break;
+			case 54:
+				if(goForward(1400) == 0)
+					clearStep();
+				break;
+			case 55:
+				if(turn(1800) == 0)
+					clearStep();
+				break;
+			case 56:
+				if(abs(goForward(41, 250, true)) <= 16)
+					clearStep();
+				break;
+			case 57:
+				openClaw(127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 58:
+				if(goForward(-600) == 0)
+					clearStep();
+				break;
+			case 59:
+				extendArmTo(0);
+				setWristTo(1404);
+				if(setArmTo(0) == 0)
+					clearStep();
+				break;
+			case 60:
+				if(turn(2700) == 0)
+					clearStep();
+				break;
+			case 61:
+				if(goForward(800) == 0)
+					clearStep();
+				break;
+			case 62:
+				openClaw(-127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			/*case 50: //Move forward towards mobile goal
+				if(goForward(150) == 0)
+					clearStep();
+				break;
+			case 51: //Grab mobile goal
+				openClaw(-127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 52: //Turn to begin navigating to the blue zone
+				if(turn(450, 1800, -1) == 0)
+					clearStep();
+				break;
+			case 53: //Lift arm and lower the wrist
+				setWristTo(685);
+				if(setArmTo(240) == 0)
+					clearStep();
+				break;
+			case 54: //Move forward
+				if(goForward(520) == 0)
+					clearStep();
+				break;
+			case 55: //Turn
+				if(turn(3130) == 0)
+					clearStep();
+				break;
+			case 56: //Move forward some more
+				if(goForward(800) == 0)
+					clearStep();
+				break;
+			case 57: //Turn
+				if(turn(410) == 0)
+					clearStep();
+				break;
+			case 58: //Move forward to the blue zone
+				if(goForward(2400) == 0)
+					clearStep();
+				break;
+			case 59: //Turn to face the blue zone
+				if(turn(0) == 0)
+					clearStep();
+				break;
+			case 60: //Move up to the blue zone bar
+				if(abs(goForward(42, 250, true)) <= 16)
+					clearStep();
+				break;
+			case 61: //Extend the arm
+				if(extendArmTo(855) == 0)
+					clearStep();
+				break;
+			case 62: //Open the claw and release the mobile goal (34 points)
+				openClaw(127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 63: //Un-extend the arm
+				if(extendArmTo(0) == 0)
+					clearStep();
+				break;
+/**/}
 	}
 }
