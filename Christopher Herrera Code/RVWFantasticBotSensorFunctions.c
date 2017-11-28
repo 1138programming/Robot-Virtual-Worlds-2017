@@ -8,7 +8,7 @@ const int kRobotLength = 46; //in centimeters
 
 #pragma systemFile;
 
-//This function moves the base purely based off of the two values entered when the function is called
+//This function moves the base purely based off of the two values given when the function is called
 void move(int speedLeft, int speedRight)
 {
 	//Right side of the base
