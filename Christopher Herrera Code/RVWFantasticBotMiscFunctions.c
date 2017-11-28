@@ -6,6 +6,7 @@ float averageEncoderOffset = 0;
 float rightEncoderOffset = 0;
 float leftEncoderOffset = 0;
 
+//Function that initilizes sensor values and timers before the main loop starts to run
 void init()
 {
 	SensorValue[GyroSensor] = 0;
@@ -19,6 +20,7 @@ void init()
 	clearTimer(T2);
 }
 
+//Variables that need to update continuosly
 void loopCode()
 {
 	rightEncoderValueAbsolute = -1 * SensorValue[RightEncoder];
@@ -36,6 +38,7 @@ void loopCode()
 	//Record the average relative value of the two sensors
 }
 
+//Function that clears some variables after each step in the switch case statement of the main loop
 void clearStep()
 {
 	clearTimer(T2);
