@@ -276,7 +276,7 @@ task main()
 				break;
 			case 49: //Move arm down to pick up mobile goal
 				setWristTo(840);
-				extendArmTo(640);
+				extendArmTo(642);
 				setArmTo(130);
 				if(turn(3000, 1800, -1) == 0)
 					clearStep();
@@ -288,6 +288,7 @@ task main()
 				break;
 			case 51:
 				setArmTo(250);
+				extendArmTo(900);
 				if(turn(900, 1800, 1) == 0)
 					clearStep();
 				break;
@@ -308,7 +309,7 @@ task main()
 					clearStep();
 				break;
 			case 56:
-				if(abs(goForward(41, 250, true)) <= 16)
+				if(abs(goForward(41, 250, true)) <= 17)
 					clearStep();
 				break;
 			case 57:
@@ -317,21 +318,22 @@ task main()
 					clearStep();
 				break;
 			case 58:
-				if(goForward(-600) == 0)
+				turn(1600);
+				if(wait(700) == 0)
+				{
+					step++;
 					clearStep();
-				break;
-			case 59:
-				extendArmTo(0);
-				setWristTo(1404);
-				if(setArmTo(0) == 0)
-					clearStep();
+				}
 				break;
 			case 60:
-				if(turn(2700) == 0)
+				extendArmTo(0);
+				//setWristTo(0);
+				setArmTo(150);
+				if(goForward(-1600) == 0)
 					clearStep();
 				break;
 			case 61:
-				if(goForward(800) == 0)
+				if(turn(500) == 0)
 					clearStep();
 				break;
 			case 62:
@@ -339,6 +341,126 @@ task main()
 				if(wait(50) == 0)
 					clearStep();
 				break;
+			case 63:
+				setArmTo(225);
+				if(turn(890) == 0)
+					clearStep();
+				break;
+			case 64:
+				if(goForward(650) == 0)
+					clearStep();
+				break;
+			case 65:
+				openClaw(127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 66:
+				setArmTo(130);
+				if(turn(435) == 0)
+					clearStep();
+				break;
+			case 67:
+				openClaw(-127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 68:
+				setArmTo(225);
+				if(turn(920) == 0)
+					clearStep();
+				break;
+			case 69:
+				openClaw(127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 70:
+				setArmTo(170);
+				turn(3408);
+				if(extendArmTo(900) == 0)
+					clearStep();
+				break;
+			case 71:
+				openClaw(-127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 72:
+				setArmTo(250);
+				turn(900);
+				if(extendArmTo(0) == 0)
+					clearStep();
+				break;
+			case 73:
+				openClaw(127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 74:
+				goForward(100);
+				if(setArmTo(100) == 0)
+					clearStep();
+				break;
+			case 75:
+				openClaw(-127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			case 76:
+				if(turn(3357) == 0)
+					clearStep();
+				break;
+			case 77:
+				if(goForward(1500) == 0)
+					clearStep();
+				break;
+			case 78:
+				if(turn(200) == 0)
+					clearStep();
+				break;
+			case 79:
+				setArmTo(175);
+				extendArmTo(900);
+				if(goForward(1200) == 0)
+					clearStep();
+				break;
+			case 80:
+				openClaw(127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			/*case 59:
+				if(setArmTo(0) == 0)
+					clearStep();
+				break;*/
+			/*case 59:
+				setArmTo(0);
+				if(turn(2700) == 0)
+					clearStep();
+				break;*/
+			/*case 60:
+				if(goForward(-100) == 0)
+					clearStep();
+				break;
+			case 61:
+				openClaw(-127);
+				if(wait(50) == 0)
+					clearStep();
+				break;
+			/*case 61:
+				if(goForward(800) <= 100)
+					clearStep();
+				break;
+			/*case 60:
+				if(goForward(800) == 0)
+					clearStep();
+				break;
+			case 61:
+				openClaw(-127);
+				if(wait(50) == 0)
+					clearStep();
+				break;*/
 			/*case 50: //Move forward towards mobile goal
 				if(goForward(150) == 0)
 					clearStep();
@@ -389,7 +511,7 @@ task main()
 				if(extendArmTo(855) == 0)
 					clearStep();
 				break;
-			case 62: //Open the claw and release the mobile goal (34 points)
+	 		case 62: //Open the claw and release the mobile goal (34 points)
 				openClaw(127);
 				if(wait(50) == 0)
 					clearStep();
